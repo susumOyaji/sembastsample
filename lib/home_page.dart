@@ -59,9 +59,9 @@ class _HomePageState extends State<HomePage> {
   _addCake() async {
     final list = ["apple", "orange", "chocolate"]..shuffle();
     final name = "My yummy ${list.first} cake";
-    final id = 1;
+    //final id = 1;
     final yummyness = Random().nextInt(10);
-    final newCake = Cake(id:id ,name: name, yummyness: yummyness);
+    final newCake = Cake(id:yummyness ,name: name, yummyness: yummyness);
     await _cakeRepository.insertCake(newCake);
     _loadCakes();
   }

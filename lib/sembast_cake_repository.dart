@@ -18,7 +18,7 @@ class SembastCakeRepository extends CakeRepository {
   }
 
   @override
-  Future deleteCake(int cakeId) async{
+  Future deleteCake(int cakeId) async {
     await _store.record(cakeId).delete(_database);
   }
 
@@ -29,4 +29,11 @@ class SembastCakeRepository extends CakeRepository {
         .map((snapshot) => Cake.fromMap(snapshot.key, snapshot.value))
         .toList(growable: false);
   }
+
+  void sort(String keyword) {
+    Finder(
+        filter: Filter.greaterThan('name', keyword),
+        sortOrders: [SortOrder('name')]);
+  }
+
 }
