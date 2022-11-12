@@ -72,10 +72,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   _editCake(Cake cake) async {
-    final id = 1;
     final list = ["apple", "orange", "chocolate"]..shuffle();
     final name = "My yummy ${list.first} cake";
-    final updatedCake = cake.copyWith(id:1,name:name,yummyness: cake.yummyness + 1);
+    final updatedCake = cake.copyWith(id:cake.id,name:name,yummyness: cake.yummyness + 1);
     await _cakeRepository.updateCake(updatedCake);
     _loadCakes();
   }
