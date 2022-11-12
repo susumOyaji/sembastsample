@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:sembast/sembast.dart';
 import 'package:sembastsample/cake.dart';
 import 'package:sembastsample/cake_repository.dart';
 
@@ -44,9 +45,22 @@ class _HomePageState extends State<HomePage> {
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: _addCake,
+      floatingActionButton: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          FloatingActionButton(
+            child: const Icon(
+              Icons.add,
+            ),
+            onPressed: _addCake,
+          ),
+          FloatingActionButton(
+            child: const Icon(
+              Icons.edit,
+            ),
+            onPressed: _sort(context),
+          ),
+        ],
       ),
     );
   }
@@ -61,7 +75,7 @@ class _HomePageState extends State<HomePage> {
     final name = "My yummy ${list.first} cake";
     //final id = 1;
     final yummyness = Random().nextInt(10);
-    final newCake = Cake(id:yummyness ,name: name, yummyness: yummyness);
+    final newCake = Cake(id: yummyness, name: name, yummyness: yummyness);
     await _cakeRepository.insertCake(newCake);
     _loadCakes();
   }
@@ -74,8 +88,15 @@ class _HomePageState extends State<HomePage> {
   _editCake(Cake cake) async {
     final list = ["apple", "orange", "chocolate"]..shuffle();
     final name = "My yummy ${list.first} cake";
-    final updatedCake = cake.copyWith(id:cake.id,name:name,yummyness: cake.yummyness + 1);
+    final updatedCake =
+        cake.copyWith(id: cake.id, name: name, yummyness: cake.yummyness + 1);
     await _cakeRepository.updateCake(updatedCake);
+    _loadCakes();
+  }
+
+  _sort(field) async {
+    SortOrder(field);
+    await _cakeRepository.sort(SortOrder(field));
     _loadCakes();
   }
 }

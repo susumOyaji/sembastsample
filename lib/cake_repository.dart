@@ -1,7 +1,6 @@
 import 'cake.dart';
 
 abstract class CakeRepository {
-
   Future<int> insertCake(Cake cake);
 
   Future updateCake(Cake cake);
@@ -9,4 +8,6 @@ abstract class CakeRepository {
   Future deleteCake(int cakeId);
 
   Future<List<Cake>> getAllCakes();
+
+  Future sort(String);
 }

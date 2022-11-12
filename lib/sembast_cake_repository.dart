@@ -30,9 +30,16 @@ class SembastCakeRepository extends CakeRepository {
         .toList(growable: false);
   }
 
-  void sort(String keyword) {
+
+
+  //SortOrder(String field, [bool ascending = true, bool nullLast = false])
+  //Sort order on given field; by default ascending is true, nullLast is false.
+  //factory
+  //与えられたフィールドでのORT順序。デフォルトでは昇順は真、ヌルラストは偽です。
+
+  Future sort(String name) async{
     Finder(
-        filter: Filter.greaterThan('name', keyword),
+        filter: Filter.greaterThan('name', true),
         sortOrders: [SortOrder('name')]);
   }
 
