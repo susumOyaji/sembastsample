@@ -9,5 +9,5 @@ abstract class CakeRepository {
 
   Future<List<Cake>> getAllCakes();
 
-  Future sort(String);
+  Future sort();
 }

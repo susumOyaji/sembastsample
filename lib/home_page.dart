@@ -58,7 +58,7 @@ class _HomePageState extends State<HomePage> {
             child: const Icon(
               Icons.edit,
             ),
-            onPressed: _sort(context),
+            onPressed: _sort,
           ),
         ],
       ),
@@ -75,7 +75,7 @@ class _HomePageState extends State<HomePage> {
     final name = "My yummy ${list.first} cake";
     //final id = 1;
     final yummyness = Random().nextInt(10);
-    final newCake = Cake(id: yummyness, name: name, yummyness: yummyness);
+    final newCake = Cake(name: name, yummyness: yummyness);
     await _cakeRepository.insertCake(newCake);
     _loadCakes();
   }
@@ -94,9 +94,9 @@ class _HomePageState extends State<HomePage> {
     _loadCakes();
   }
 
-  _sort(field) async {
-    SortOrder(field);
-    await _cakeRepository.sort(SortOrder(field));
+  _sort() async {
+    //SortOrder(field);
+    //await _cakeRepository.sort(SortOrder(field));
     _loadCakes();
   }
 }

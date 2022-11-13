@@ -37,7 +37,7 @@ class SembastCakeRepository extends CakeRepository {
   //factory
   //与えられたフィールドでのORT順序。デフォルトでは昇順は真、ヌルラストは偽です。
 
-  Future sort(String name) async{
+  Future sort() async{
     Finder(
         filter: Filter.greaterThan('name', true),
         sortOrders: [SortOrder('name')]);
