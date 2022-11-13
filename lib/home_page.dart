@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
           final cake = _cakes[index];
           return ListTile(
             title: Text(cake.name),
-            subtitle: Text("Yummyness: ${cake.yummyness}"),
+            subtitle: Text("Yummyness: ${cake.yummyness}  ID:${cake.id}"),
             trailing: IconButton(
               icon: const Icon(Icons.delete),
               onPressed: () => _deleteCake(cake),
@@ -75,7 +75,7 @@ class _HomePageState extends State<HomePage> {
     final name = "My yummy ${list.first} cake";
     //final id = 1;
     final yummyness = Random().nextInt(10);
-    final newCake = Cake(name: name, yummyness: yummyness);
+    final newCake = Cake(id: 0, name: name, yummyness: yummyness);
     await _cakeRepository.insertCake(newCake);
     _loadCakes();
   }
