@@ -14,11 +14,13 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   CakeRepository _cakeRepository = GetIt.I.get();
   List<Cake> _cakes = [];
+  int Anything = 0; //dumy
 
   @override
   void initState() {
     super.initState();
     _loadCakes();
+    //_sort();
   }
 
   @override
@@ -75,7 +77,7 @@ class _HomePageState extends State<HomePage> {
     final name = "My yummy ${list.first} cake";
     //final id = 1;
     final yummyness = Random().nextInt(10);
-    final newCake = Cake(id: 0, name: name, yummyness: yummyness);
+    final newCake = Cake(id: Anything, name: name, yummyness: yummyness);
     await _cakeRepository.insertCake(newCake);
     _loadCakes();
   }
@@ -88,15 +90,16 @@ class _HomePageState extends State<HomePage> {
   _editCake(Cake cake) async {
     final list = ["apple", "orange", "chocolate"]..shuffle();
     final name = "My yummy ${list.first} cake";
-    final updatedCake =
-        cake.copyWith(id: cake.id, name: name, yummyness: cake.yummyness + 1);
+    final updatedCake = cake.copyWith(
+        id: cake.id, name: cake.name, yummyness: cake.yummyness + 1);
     await _cakeRepository.updateCake(updatedCake);
     _loadCakes();
   }
 
   _sort() async {
-    //SortOrder(field);
-    //await _cakeRepository.sort(SortOrder(field));
+    List<RecordSnapshot<dynamic, dynamic>> ret = await _cakeRepository.sort();
+    var b = ret.cast<List<Map>>();
+    setState(() => _cakes = b);
     _loadCakes();
   }
 }

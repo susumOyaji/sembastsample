@@ -6,10 +6,7 @@ class Cake {
   Cake({required this.id, required this.name, required this.yummyness});
 
   Map<String, dynamic> toMap() {
-    return {
-      'name': this.name,
-      'yummyness': this.yummyness
-    };
+    return {'name': this.name, 'yummyness': this.yummyness};
   }
 
   factory Cake.fromMap(int id, Map<String, dynamic> map) {
@@ -20,7 +17,8 @@ class Cake {
     );
   }
 
-  Cake copyWith({required int id, required String name, required int yummyness}){
+  Cake copyWith(
+      {required int id, required String name, required int yummyness}) {
     return Cake(
       id: id ?? this.id,
       name: name ?? this.name,
