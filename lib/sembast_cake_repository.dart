@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:get_it/get_it.dart';
 import 'package:sembast/sembast.dart';
+import 'package:sembast/utils/value_utils.dart';
 import 'package:sembastsample/cake.dart';
 import 'package:sembastsample/cake_repository.dart';
 
@@ -43,22 +44,40 @@ class SembastCakeRepository extends CakeRepository {
   //factory
   //与えられたフィールドでのORT順序。デフォルトでは昇順は真、ヌルラストは偽です。
   //["apple", "orange", "chocolate"
-  Future<List<RecordSnapshot<dynamic, dynamic>>> sort() async {
-// Look for any animal "greater than" (alphabetically) 'cat'
-// ordered by name
-
-    // Finder object can also sort data.
-    //final finder = Finder(sortOrders: [
-    //  SortOrder(''),
-    //]);
+  Future sort() async {
+    var map = <dynamic, dynamic>{};
+    var idmap = List<Map<String, dynamic>>{};
+    var key = 0;
 
     var finder = Finder(
         //filter: Filter.greaterThan('name', 'yummyness'),
-        sortOrders: [SortOrder('yummyness')]);
-    var record = await _store.find(_database, finder: finder);
+        sortOrders: [SortOrder('name')]);
+    var record1 = await _store.find(_database, finder: finder);
 
-    print(finder);
-    print(record);
-    return record;
+    int count = record1.length;
+    for (int i = 0; i < count; i++) {
+      //print(i);
+      map = cloneMap(record1[i].value);
+      key = record1[i].key;
+      idmap[i] = {'id': key, ...map};
+      
+      
+      print(map);
+      print(idmap);
+    }
+    //Map<String, dynamic> headerValue = HashMap<String, dynamic>.from(record1);
+    //print('runtime: $map');
+    //print(record);
+
+    var cake = record1.toString();
+    //List c = List<dynamic>.from(cake.split(' '));
+    var cake1 = record1[0].value;
+
+    //print(cake);
+    var id = record1[0].key;
+    //print(id);
+
+    print(record1);
+    //return b;
   }
 }

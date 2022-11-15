@@ -20,7 +20,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     _loadCakes();
-    //_sort();
+    _sort();
   }
 
   @override
@@ -97,9 +97,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   _sort() async {
-    List<RecordSnapshot<dynamic, dynamic>> ret = await _cakeRepository.sort();
-    var b = ret.cast<List<Map>>();
-    setState(() => _cakes = b);
+    await _cakeRepository.sort();
+    //var b = ret.cast<List>();
+    //setState(() => _cakes = b);
     _loadCakes();
   }
 }
