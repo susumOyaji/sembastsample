@@ -10,4 +10,6 @@ abstract class CakeRepository {
   Future<List<Cake>> getAllCakes();
 
   Future sort();
+
+  Future search(String firstkey, String secondkey);
 }

@@ -6,6 +6,7 @@ import 'package:get_it/get_it.dart';
 import 'package:sembast/sembast.dart';
 import 'package:sembastsample/cake.dart';
 import 'package:sembastsample/cake_repository.dart';
+import 'sembast_cake_repository.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -49,9 +50,10 @@ class _HomePageState extends State<HomePage> {
               textInputAction: TextInputAction.search,
               onSubmitted: (String val) {
                 print(val);
+                _search(val, val);
                 //search(val, isCaseSensitive: isCaseSensitive);
                 controller?.clear(); //リセット処理
-                //search(val, isCaseSensitive: isCaseSensitive);
+
                 //controller?.clear(); //リセット処理
               },
               controller: controller,
@@ -154,5 +156,9 @@ class _HomePageState extends State<HomePage> {
     List<Cake> sortresult = await _cakeRepository.sort();
     setState(() => _cakes = sortresult);
     //_loadCakes();
+  }
+
+  __search(String val, String val) async {
+    List<Cake> searchresult = await _cakeRepository.search(val, val);
   }
 }

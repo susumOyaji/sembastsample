@@ -49,4 +49,6 @@ class SembastCakeRepository extends CakeRepository {
 
     return idmap;
   }
+
+  Future search(String firstkey, String secondkey) async {}
 }
