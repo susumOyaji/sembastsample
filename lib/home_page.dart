@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -15,37 +16,90 @@ class _HomePageState extends State<HomePage> {
   CakeRepository _cakeRepository = GetIt.I.get();
   List<Cake> _cakes = [];
   int Anything = 0; //dumy
+  TextEditingController? controller;
+  bool isCaseSensitive = false;
 
   @override
   void initState() {
     super.initState();
     _loadCakes();
-    _sort();
+    //_sort();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("My Favorite Cakes"),
-      ),
-      body: ListView.builder(
-        itemCount: _cakes.length,
-        itemBuilder: (context, index) {
-          final cake = _cakes[index];
-          return ListTile(
-            title: Text(cake.name),
-            subtitle: Text("Yummyness: ${cake.yummyness}  ID:${cake.id}"),
-            trailing: IconButton(
-              icon: const Icon(Icons.delete),
-              onPressed: () => _deleteCake(cake),
+      //appBar: AppBar(
+      //  title: const Text("My Favorite Cakes"),
+      //),
+      body: Container(
+        child: Column(
+          children: [
+            Container(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  //12crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('FirstString:  \nSecondString:'),
+                  ],
+                )),
+            TextField(
+              autofocus: true,
+              textInputAction: TextInputAction.search,
+              onSubmitted: (String val) {
+                print(val);
+                //search(val, isCaseSensitive: isCaseSensitive);
+                controller?.clear(); //リセット処理
+                //search(val, isCaseSensitive: isCaseSensitive);
+                //controller?.clear(); //リセット処理
+              },
+              controller: controller,
+              decoration: InputDecoration(
+                hintText: 'hintText',
+                enabledBorder: OutlineInputBorder(
+                    //何もしていない時の挙動、見た目
+                    borderRadius: BorderRadius.circular(30),
+                    borderSide: const BorderSide(
+                      color: Colors.greenAccent,
+                    )),
+                focusedBorder: OutlineInputBorder(
+                    //フォーカスされた時の挙動、見た目
+                    borderRadius: BorderRadius.circular(30),
+                    borderSide: const BorderSide(
+                      color: Colors.amber,
+                    )),
+              ),
+              onChanged: (String val) {
+                //ユーザーがデバイス上でTextFieldの値を変更した場合のみ発動される.
+                //search(val, isCaseSensitive: isCaseSensitive);
+                //controller?.clear(); //リセット処理
+              },
             ),
-            leading: IconButton(
-              icon: const Icon(Icons.thumb_up),
-              onPressed: () => _editCake(cake),
+            ListView.builder(
+              //reverse: true, // この行を追加
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: _cakes.length,
+              itemBuilder: (BuildContext context, int index) {
+                final cake = _cakes[index];
+                return ListTile(
+                  title: Text(cake.name),
+                  subtitle: Text("Yummyness: ${cake.yummyness}  ID:${cake.id}"),
+                  trailing: IconButton(
+                    icon: const Icon(Icons.delete),
+                    onPressed: () => _deleteCake(cake),
+                    //style: TextStyle(fontSize: 10)
+                  ),
+                  leading: IconButton(
+                    icon: const Icon(Icons.thumb_up),
+                    onPressed: () => _editCake(cake),
+                  ),
+                );
+              },
             ),
-          );
-        },
+          ],
+        ),
       ),
       floatingActionButton: Column(
         mainAxisSize: MainAxisSize.min,
@@ -58,7 +112,7 @@ class _HomePageState extends State<HomePage> {
           ),
           FloatingActionButton(
             child: const Icon(
-              Icons.edit,
+              Icons.sort,
             ),
             onPressed: _sort,
           ),
@@ -97,9 +151,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   _sort() async {
-    await _cakeRepository.sort();
-    //var b = ret.cast<List>();
-    //setState(() => _cakes = b);
-    _loadCakes();
+    List<Cake> sortresult = await _cakeRepository.sort();
+    setState(() => _cakes = sortresult);
+    //_loadCakes();
   }
 }
