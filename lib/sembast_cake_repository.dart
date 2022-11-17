@@ -52,12 +52,12 @@ class SembastCakeRepository extends CakeRepository {
     return idmap;
   }
 
-  Future search(String firstkey, String secondkey) async {
+  Future<List<dynamic>> search(String firstkey, String secondkey) async {
     // Read by key
-    
+    var records = await _store.records([firstkey, secondkey]).get(_database);
   
 
 
-    return;
+    return records;
   }
 }
