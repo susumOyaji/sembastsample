@@ -17,7 +17,7 @@ class _HomePageState extends State<HomePage> {
   CakeRepository _cakeRepository = GetIt.I.get();
   List<Cake> _cakes = [];
   int Anything = 0; //dumy
-  TextEditingController? controller;
+  var controller = TextEditingController();
   bool isCaseSensitive = false;
   String firstkey = '';
   String secondkey = '';
@@ -66,38 +66,33 @@ class _HomePageState extends State<HomePage> {
                       color: Colors.amber,
                     )),
               ),
-              //onEditingComplete: ,
+              
+
+
               onChanged: (String val) {
                 //ユーザーがデバイス上でTextFieldの値を変更した場合のみ発動される.
-                //search(val, isCaseSensitive: isCaseSensitive);
-                //controller?.clear(); //リセット処理
+              
               },
               onSubmitted: (String val) {
                 print(val);
                 if (firstkey.isEmpty) {
-                  firstkey = val;
                   setState(() => firstkey = val);
-                  controller?.clear(); //リセット処理
+                  controller.clear(); //リセット処理
                   return;
                 }
                 if (firstkey.isNotEmpty && secondkey.isEmpty) {
-                  secondkey = val;
+
                   setState(() => secondkey = val);
-                  //return;
+                
                 }
                 if (firstkey.isNotEmpty && secondkey.isNotEmpty) {
                   _search(firstkey, secondkey);
                 }
 
-                //search(val, isCaseSensitive: isCaseSensitive);
-                controller?.clear(); //リセット処理
-
-                //controller?.clear(); //リセット処理
+             
               },
             ),
-            //TextFormField(
-            //  keyboardType: TextInputType.none,
-            //),
+           
             ListView.builder(
               //reverse: true, // この行を追加
               shrinkWrap: true,
@@ -179,6 +174,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   _search(String firstkey, String secondkey) async {
-    List<Cake> searchresult = await _cakeRepository.search(firstkey, secondkey);
+    List<Cake>? searchresult = await _cakeRepository.search(firstkey, secondkey);
   }
 }

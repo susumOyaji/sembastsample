@@ -5,6 +5,8 @@ import 'package:sembast/utils/value_utils.dart';
 import 'package:sembastsample/cake.dart';
 import 'package:sembastsample/cake_repository.dart';
 
+//import 'package:test/test.dart';
+
 class SembastCakeRepository extends CakeRepository {
   final Database _database = GetIt.I.get();
   final StoreRef _store = intMapStoreFactory.store("cake_store1");
@@ -51,6 +53,11 @@ class SembastCakeRepository extends CakeRepository {
   }
 
   Future search(String firstkey, String secondkey) async {
+    // Read by key
+    
+  
+
+
     return;
   }
 }
