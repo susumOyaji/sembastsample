@@ -19,6 +19,8 @@ class _HomePageState extends State<HomePage> {
   int Anything = 0; //dumy
   TextEditingController? controller;
   bool isCaseSensitive = false;
+  String firstkey = '';
+  String secondkey = '';
 
   @override
   void initState() {
@@ -42,20 +44,12 @@ class _HomePageState extends State<HomePage> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   //12crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('FirstString:  \nSecondString:'),
+                    Text('FirstString:$firstkey  \nSecondString:$secondkey'),
                   ],
                 )),
             TextField(
               autofocus: true,
               textInputAction: TextInputAction.search,
-              onSubmitted: (String val) {
-                print(val);
-                _search(val, val);
-                //search(val, isCaseSensitive: isCaseSensitive);
-                controller?.clear(); //リセット処理
-
-                //controller?.clear(); //リセット処理
-              },
               controller: controller,
               decoration: InputDecoration(
                 hintText: 'hintText',
@@ -72,12 +66,38 @@ class _HomePageState extends State<HomePage> {
                       color: Colors.amber,
                     )),
               ),
+              //onEditingComplete: ,
               onChanged: (String val) {
                 //ユーザーがデバイス上でTextFieldの値を変更した場合のみ発動される.
                 //search(val, isCaseSensitive: isCaseSensitive);
                 //controller?.clear(); //リセット処理
               },
+              onSubmitted: (String val) {
+                print(val);
+                if (firstkey.isEmpty) {
+                  firstkey = val;
+                  setState(() => firstkey = val);
+                  controller?.clear(); //リセット処理
+                  return;
+                }
+                if (firstkey.isNotEmpty && secondkey.isEmpty) {
+                  secondkey = val;
+                  setState(() => secondkey = val);
+                  //return;
+                }
+                if (firstkey.isNotEmpty && secondkey.isNotEmpty) {
+                  _search(firstkey, secondkey);
+                }
+
+                //search(val, isCaseSensitive: isCaseSensitive);
+                controller?.clear(); //リセット処理
+
+                //controller?.clear(); //リセット処理
+              },
             ),
+            //TextFormField(
+            //  keyboardType: TextInputType.none,
+            //),
             ListView.builder(
               //reverse: true, // この行を追加
               shrinkWrap: true,
@@ -158,7 +178,7 @@ class _HomePageState extends State<HomePage> {
     //_loadCakes();
   }
 
-  __search(String val, String val) async {
-    List<Cake> searchresult = await _cakeRepository.search(val, val);
+  _search(String firstkey, String secondkey) async {
+    List<Cake> searchresult = await _cakeRepository.search(firstkey, secondkey);
   }
 }
