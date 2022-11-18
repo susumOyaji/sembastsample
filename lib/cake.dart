@@ -1,7 +1,7 @@
 class Cake {
   final int id;
   final String name;
-  final int yummyness;
+  final String yummyness;
 
   Cake({required this.id, required this.name, required this.yummyness});
 
@@ -18,7 +18,7 @@ class Cake {
   }
 
   Cake copyWith(
-      {required int id, required String name, required int yummyness}) {
+      {required int id, required String name, required String yummyness}) {
     return Cake(
       id: id ?? this.id,
       name: name ?? this.name,

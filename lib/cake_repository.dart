@@ -11,5 +11,5 @@ abstract class CakeRepository {
 
   Future sort();
 
-  Future search(String firstkey, String secondkey);
+  Future search(String firstkey);
 }

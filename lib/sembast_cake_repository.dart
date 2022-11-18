@@ -9,7 +9,7 @@ import 'package:sembastsample/cake_repository.dart';
 
 class SembastCakeRepository extends CakeRepository {
   final Database _database = GetIt.I.get();
-  final StoreRef _store = intMapStoreFactory.store("cake_store1");
+  final StoreRef _store = intMapStoreFactory.store("cake_store2");
 
   @override
   Future<int> insertCake(Cake cake) async {
@@ -52,12 +52,22 @@ class SembastCakeRepository extends CakeRepository {
     return idmap;
   }
 
-  Future<List<dynamic>> search(String firstkey, String secondkey) async {
+  Future<List<Cake>> search(String firstkey) async {
+    List<Cake> idmap = [];
     // Read by key
-    var records = await _store.records([firstkey, secondkey]).get(_database);
-  
+    var finder = Finder(
+        //filter: Filter.greaterThan('name', 'yummyness'),
+        sortOrders: [SortOrder('yummyness')]);
 
+    var finder1 = Finder(sortOrders: [SortOrder(Field.value, false)]);
+    var record = await _store.find(_database, finder: finder);
 
-    return records;
+    for (int i = 0; i < record.length; ++i) {
+      var map = cloneMap(record[i].value);
+      var key = record[i].key;
+      Cake sortcake = Cake.fromMap(key, map);
+      idmap.add(sortcake);
+    }
+    return idmap;
   }
 }
