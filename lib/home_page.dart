@@ -152,14 +152,19 @@ class _HomePageState extends State<HomePage> {
 
   _addCake(String farstkey, String secondkey) async {
     final name;
+    final yummyness;
     if (firstkey.isEmpty) {
       final list = ["A001", "R001", "B001", "C001", "P001"]..shuffle();
       name = "Location ${list.first}";
+
+      final sublist = ["R001", "B001", "C001", "P001"]..shuffle();
+      yummyness = "Sub ${sublist.first}";
     } else {
       name = farstkey;
+      yummyness = secondkey; //Random().nextInt(10);
     }
 
-    final yummyness = secondkey; //Random().nextInt(10);
+    
     final newCake = Cake(id: Anything, name: name, yummyness: yummyness);
     await _cakeRepository.insertCake(newCake);
     _loadCakes();
